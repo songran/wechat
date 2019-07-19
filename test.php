@@ -3,8 +3,8 @@
 	use Wx\Qrcode;  
  
  	$config =[
-		'app_id'  => 'wx139f794d8d1cd210',// 评测小程序 微信appid
-	 	  'secret'  => '38d129acd65c08b4a505b1c4f762704e', //评测小程序 
+		'app_id'  => 'xx',// 评测小程序 微信appid
+	 	  'secret'  => 'xx', //评测小程序 
 	];
 	$mod = new Qrcode($config);
 	$base64_image =  $mod->getBase64Img('pages/index/index?qrcode=helloworld');
