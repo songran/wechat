@@ -34,14 +34,24 @@ class Qrcode{
      * @return   [type]            [description]
      */
     public function  squareImg($path,$width=150,$other=[]){
+		$file = self::squareImgFile($path,$width,$other);
+		return  self::getBase64($file);
+     }
+     /**
+     * 获得小程序二维码图片  方形 原形状
+     * @Author   SongRan
+     * @DateTime 2019-07-19
+     * @param    [type]     $path  [要传的参数] eq: pages/index/index?qrcode=helloworld
+     * @param    integer    $width [图片宽度]
+     * @return   [type]            [description]
+     */
+    public function  squareImgFile($path,$width=150,$other=[]){
 
 		$ACCESS_TOKEN = self::getAccessToken();		 
 		$url ="https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=$ACCESS_TOKEN";
 		$arr =["path"=>$path, "width"=> $width];
 		$param = json_encode(array_merge($arr,$other));
-		$result = self::httpRequest($url, $param,"POST");
-		return "data:image/jpeg;base64,".base64_encode( $result );
-		  
+		return self::httpRequest($url, $param,"POST");
     }
 
     /**
@@ -53,14 +63,26 @@ class Qrcode{
      * @return   [type]            [description]
      */
     public function circularImg($path,$width=150,$other=[]){
+    	$file = self::circularImgFile($path,$width,$other);
+    	return self::getBase64($file);
+
+    }
+    /*
+    *图片 流文件 圆形 
+    */
+    public function circularImgFile($path,$width=150,$other=[]){
     	$ACCESS_TOKEN = self::getAccessToken();		 
 		$url ="https://api.weixin.qq.com/wxa/getwxacode?access_token=$ACCESS_TOKEN";
 		$arr = ["path"=>$path, "width"=> $width];
 		$param = json_encode(array_merge($arr,$other));
-		$result = self::httpRequest($url, $param,"POST");
-		return "data:image/jpeg;base64,".base64_encode( $result );
-
+		return self::httpRequest($url, $param,"POST");	 
     }
+    /*
+     * 流文件转 base64
+    */
+	public function getBase64($file){
+		return "data:image/jpeg;base64,".base64_encode( $file );
+	} 
 
 	/**
 	 * curl 公共方法
